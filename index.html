@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="usrnm", placeholder="Username">
+    <input type="password" id="psswrd", placeholder="Password">
+    <button id="btn1">Sign In</button>
+</body>
+<script>
+    let btn1 = document.getElementById('btn1')
+    let usrnm = document.getElementById('usrnm')
+    let psswrd = document.getElementById('psswrd')
+    
+    btn1.addEventListener('click', async() => {
+        if(usrnm.value != "" && psswrd.value != ""){
+            let logresp = await fetch('/login', {
+                'method': 'POST',
+                'headers': {
+                    'Content-Type': 'application/json'
+                },
+                'body': JSON.stringify({
+                    "username" : usrnm.value,
+                    "password": psswrd.value
+                })
+            })
+            let logjs = await logresp.json()
+            if(logjs.login == "successful"){
+                window.location.href = window.location.origin + "/user"
+            }
+        }
+    })
+</script>
+</html>
